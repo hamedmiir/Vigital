@@ -2,6 +2,7 @@ let song;
 let mic;
 let fft;
 let usingMic = false;
+let video;
 let batteryLevel = 1;
 
 /**
@@ -12,11 +13,10 @@ function preload() {
 }
 
 /**
- * Setup the canvas, audio input, and battery monitoring.
+ * Setup the canvas, audio input, video capture, and battery monitoring.
  */
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  colorMode(HSB, 255); // Use HSB color mode for smoother color transitions
   fft = new p5.FFT();
   mic = new p5.AudioIn();
   mic.start();
@@ -35,9 +35,9 @@ function windowResized() {
  * Draw the visualizer, which reacts to the audio input and other environmental factors.
  */
 function draw() {  
-  background(0); // Clear the previous frame
-
-  // Set the input for FFT analysis
+  // Adjust visuals based on battery level
+  let batteryColor = color(map(batteryLevel, 0, 1, 0, 255), 0, 255);
+  
   if (usingMic) {
     fft.setInput(mic);
   } else if (song && song.isPlaying()) {
@@ -47,12 +47,10 @@ function draw() {
   let spectrum = fft.analyze();
 
   noStroke();
+  fill(batteryColor);
   for (let i = 0; i < spectrum.length; i++) {
     let x = map(i, 0, spectrum.length, 0, width);
     let h = -height + map(spectrum[i], 0, 255, height, 0);
-    let hue = map(spectrum[i], 0, 255, 0, 255); // Map spectrum value to hue
-    let brightness = map(batteryLevel, 0, 1, 100, 255); // Adjust brightness based on battery level
-    fill(hue, 255, brightness);
     rect(x, height, width / spectrum.length, h);
   }
 }
