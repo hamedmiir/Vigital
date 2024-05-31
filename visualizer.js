@@ -21,10 +21,6 @@ function setup() {
   mic = new p5.AudioIn();
   mic.start();
   
-  video = createCapture(VIDEO);
-  video.size(windowWidth, windowHeight);
-  video.hide();
-  
   setupBatteryMonitoring();
 }
 
