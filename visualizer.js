@@ -34,7 +34,12 @@ function windowResized() {
 /**
  * Draw the visualizer, which reacts to the audio input and other environmental factors.
  */
-function draw() {  
+function draw() {
+  background(0);
+  
+  // Draw video as background with transparency
+  tint(255, 150);
+  
   // Adjust visuals based on battery level
   let batteryColor = color(map(batteryLevel, 0, 1, 0, 255), 0, 255);
   
