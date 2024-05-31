@@ -39,7 +39,6 @@ function draw() {
   
   // Draw video as background with transparency
   tint(255, 150);
-  image(video, 0, 0, width, height);
   
   // Adjust visuals based on battery level
   let batteryColor = color(map(batteryLevel, 0, 1, 0, 255), 0, 255);
